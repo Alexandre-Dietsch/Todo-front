@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { TodosTypes } from 'types/todo.types'
+import AddTodo from './AddTodo'
 import Todos from './Todos'
 import styles from './TodosWrapper.module.scss'
 
@@ -60,7 +61,9 @@ const TodosWrapper = () => {
         </div>
       )}
       {tabs === 3 && <div className={styles.archived}>Archived</div>}
-      <div className={styles.newTodoWrapper}></div>
+      <div className={styles.addTodoWrapper}>
+        <AddTodo setTodos={setTodos} />
+      </div>
     </div>
   )
 }

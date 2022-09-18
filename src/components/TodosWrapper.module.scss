@@ -8,6 +8,7 @@
   background-color: $white;
   border-radius: 1rem;
   box-shadow: 0 0 3rem #00000020;
+  position: relative;
 }
 
 .tabs {
@@ -51,4 +52,11 @@
 
 .todosTab {
   min-height: 30vh;
+}
+
+.addTodoWrapper {
+  position: absolute;
+  bottom: -6rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -19,14 +19,16 @@ const Todo = ({ todo }: PropsTypes) => {
       <div className={styles.todoContent}>
         <h2>{todo.title}</h2>
         <p>{todo.body}</p>
-        <div
-          className={[styles.date, taskToDoToday && styles.urgentTask].join(
-            ' ',
-          )}
-        >
-          <DateIcon />
-          {moment(todo.limit).format('LL')}
-        </div>
+        {todo.limit && (
+          <div
+            className={[styles.date, taskToDoToday && styles.urgentTask].join(
+              ' ',
+            )}
+          >
+            <DateIcon />
+            {moment(todo.limit).format('LL')}
+          </div>
+        )}
       </div>
     </div>
   )
