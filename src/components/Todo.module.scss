@@ -1,0 +1,38 @@
+@import 'scss';
+
+.todo {
+  width: 90%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid $primaryGrey;
+  margin: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.todoContent {
+  h2 {
+    color: $black;
+    font-size: $large;
+  }
+
+  p {
+    color: $secondaryGrey;
+    font-size: $regular;
+  }
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: $regular;
+  color: $secondaryGrey;
+  margin-top: 0.5rem;
+}
+
+.urgentTask {
+  color: rgb(226, 88, 88);
+}

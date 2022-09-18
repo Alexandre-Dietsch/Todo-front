@@ -1,8 +1,10 @@
 @import 'scss';
 
 .todosWrapper {
-  width: 80%;
+  width: 70%;
   min-height: 50vh;
+  display: flex;
+  flex-direction: column;
   background-color: $white;
   border-radius: 1rem;
   box-shadow: 0 0 3rem #00000020;
@@ -45,4 +47,8 @@
     color: $black;
     border-color: $purple;
   }
+}
+
+.todosTab {
+  min-height: 30vh;
 }
