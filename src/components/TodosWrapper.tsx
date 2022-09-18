@@ -42,7 +42,9 @@ const TodosWrapper = () => {
           className={tabs === 2 ? styles.tabSelected : ''}
         >
           Todo
-          <span className={styles.totalTab}>{todos.length}</span>
+          <span className={styles.totalTab}>
+            {todos.filter(todo => !todo.isArchived).length}
+          </span>
         </li>
         <li
           onClick={() => setTabs(3)}
@@ -57,10 +59,24 @@ const TodosWrapper = () => {
       {tabs === 1 && <div className={styles.notifications}>Notifications</div>}
       {tabs === 2 && (
         <div className={styles.todosTab}>
-          <Todos todos={todos} isLoading={isLoading} error={error} />
+          <Todos
+            todos={todos.filter(todo => !todo.isArchived)}
+            setTodos={setTodos}
+            isLoading={isLoading}
+            error={error}
+          />
         </div>
       )}
-      {tabs === 3 && <div className={styles.archived}>Archived</div>}
+      {tabs === 3 && (
+        <div className={styles.archived}>
+          <Todos
+            todos={todos.filter(todo => todo.isArchived)}
+            setTodos={setTodos}
+            isLoading={isLoading}
+            error={error}
+          />
+        </div>
+      )}
       <div className={styles.addTodoWrapper}>
         <AddTodo setTodos={setTodos} />
       </div>

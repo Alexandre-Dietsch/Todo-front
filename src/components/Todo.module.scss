@@ -12,7 +12,15 @@
   cursor: pointer;
 }
 
+.checkbox {
+  flex: 1;
+}
+
 .todoContent {
+  display: flex;
+  flex-direction: column;
+  flex: 8;
+
   h2 {
     color: $black;
     font-size: $large;
@@ -34,5 +42,49 @@
 }
 
 .urgentTask {
-  color: rgb(226, 88, 88);
+  color: $red;
+}
+
+.removeIcons {
+  flex: 1;
+
+  svg {
+    font-size: 1.6rem;
+    color: $secondaryGrey;
+  }
+
+  .deleteIcon {
+    color: $red;
+  }
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.8rem;
+
+  button {
+    width: fit-content;
+    border-radius: 1rem;
+    background-color: transparent;
+    border: 1px solid $primaryGrey;
+    font-size: $regular;
+    color: $secondaryGrey;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+
+    &:first-child {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    & + .filledButton {
+      background-color: $red;
+      color: $white;
+      border-color: transparent;
+    }
+  }
 }

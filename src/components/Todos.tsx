@@ -1,17 +1,18 @@
+import { Fragment, Dispatch, SetStateAction } from 'react'
 import { BiErrorCircle as ErrorIcon } from 'react-icons/bi'
 import { TodosTypes } from 'types/todo.types'
 import Todo from './Todo'
 import SpinningLoader from '../components/ui/SpinningLoader'
 import styles from './Todos.module.scss'
-import { Fragment } from 'react'
 
 type PropsTypes = {
   todos: TodosTypes
+  setTodos: Dispatch<SetStateAction<TodosTypes>>
   isLoading: boolean
   error: string | null
 }
 
-const Todos = ({ todos, isLoading, error }: PropsTypes) => {
+const Todos = ({ todos, setTodos, isLoading, error }: PropsTypes) => {
   if (isLoading)
     return (
       <div>
@@ -31,7 +32,7 @@ const Todos = ({ todos, isLoading, error }: PropsTypes) => {
     <Fragment>
       {todos.map(todo => (
         <div key={todo._id} className={styles.wrapper}>
-          <Todo todo={todo} />
+          <Todo todo={todo} setTodos={setTodos} />
         </div>
       ))}
     </Fragment>
