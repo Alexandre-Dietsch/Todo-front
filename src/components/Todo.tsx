@@ -70,6 +70,9 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
         )}
         {confirm.visibility && (
           <div className={styles.buttonsWrapper}>
+            <p>
+              Are you sure to <strong>{confirm.action} </strong>this task ?
+            </p>
             <button
               onClick={() => setConfirm({ visibility: false, action: '' })}
             >
@@ -91,9 +94,11 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
           className={styles.deleteIcon}
           onClick={() => setConfirm({ visibility: true, action: 'remove' })}
         />
-        <ArchiveIcon
-          onClick={() => setConfirm({ visibility: true, action: 'archive' })}
-        />
+        {!todo.isArchived && (
+          <ArchiveIcon
+            onClick={() => setConfirm({ visibility: true, action: 'archive' })}
+          />
+        )}
       </div>
     </div>
   )
