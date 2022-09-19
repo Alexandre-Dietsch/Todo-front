@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { TodosTypes } from 'types/todo.types'
 import AddTodo from './AddTodo'
 import Todos from './Todos'
+import Notifications from './Notifications'
 import styles from './TodosWrapper.module.scss'
 
 const TodosWrapper = () => {
@@ -41,7 +42,7 @@ const TodosWrapper = () => {
           onClick={() => setTabs(2)}
           className={tabs === 2 ? styles.tabSelected : ''}
         >
-          Todo
+          Todos
           <span className={styles.totalTab}>
             {todos.filter(todo => !todo.isArchived).length}
           </span>
@@ -56,7 +57,11 @@ const TodosWrapper = () => {
           </span>
         </li>
       </ul>
-      {tabs === 1 && <div className={styles.notifications}>Notifications</div>}
+      {tabs === 1 && (
+        <div className={styles.notifications}>
+          <Notifications />
+        </div>
+      )}
       {tabs === 2 && (
         <div className={styles.todosTab}>
           <Todos
@@ -74,11 +79,12 @@ const TodosWrapper = () => {
             setTodos={setTodos}
             isLoading={isLoading}
             error={error}
+            section="archived"
           />
         </div>
       )}
       <div className={styles.addTodoWrapper}>
-        <AddTodo setTodos={setTodos} />
+        <AddTodo todos={todos} setTodos={setTodos} />
       </div>
     </div>
   )

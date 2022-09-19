@@ -85,22 +85,22 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
             className={todo.isArchived ? styles.checked : styles.checkbox}
           />
         </div>
-        <div
-          className={styles.todoContent}
-          onClick={() => setTodoVisibility(!todoVisibility)}
-        >
-          <h2>{todo.title}</h2>
-          <p>{todo.body}</p>
-          {todo.limit && (
-            <div
-              className={[styles.date, taskToDoToday && styles.urgentTask].join(
-                ' ',
-              )}
-            >
-              <DateIcon />
-              {moment(todo.limit).format('LL')}
-            </div>
-          )}
+        <div className={styles.todoContent}>
+          <div onClick={() => setTodoVisibility(!todoVisibility)}>
+            <h2>{todo.title}</h2>
+            <p>{todo.body}</p>
+            {todo.limit && (
+              <div
+                className={[
+                  styles.date,
+                  taskToDoToday && styles.urgentTask,
+                ].join(' ')}
+              >
+                <DateIcon />
+                {moment(todo.limit).format('LL')}
+              </div>
+            )}
+          </div>
           {confirm.visibility && (
             <div className={styles.buttonsWrapper}>
               <p>

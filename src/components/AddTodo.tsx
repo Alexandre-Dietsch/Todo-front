@@ -4,10 +4,11 @@ import { TodosTypes } from 'types/todo.types'
 import styles from './AddTodo.module.scss'
 
 type PropsTypes = {
+  todos: TodosTypes
   setTodos: Dispatch<SetStateAction<TodosTypes>>
 }
 
-const AddTodo = ({ setTodos }: PropsTypes) => {
+const AddTodo = ({ todos, setTodos }: PropsTypes) => {
   const [displayAddInput, setDisplayAddInput] = useState(false)
   const initialTodo = { title: '', body: '' }
   const [newTodo, setNewTodo] = useState(initialTodo)
@@ -34,7 +35,7 @@ const AddTodo = ({ setTodos }: PropsTypes) => {
   return (
     <div>
       <button
-        className={styles.addButton}
+        className={[styles.addButton, !todos.length && styles.pulse].join(' ')}
         onClick={() => setDisplayAddInput(true)}
         disabled={displayAddInput}
       >

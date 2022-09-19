@@ -10,9 +10,16 @@ type PropsTypes = {
   setTodos: Dispatch<SetStateAction<TodosTypes>>
   isLoading: boolean
   error: string | null
+  section?: 'todo' | 'archived'
 }
 
-const Todos = ({ todos, setTodos, isLoading, error }: PropsTypes) => {
+const Todos = ({
+  todos,
+  setTodos,
+  isLoading,
+  error,
+  section = 'todo',
+}: PropsTypes) => {
   if (isLoading)
     return (
       <div>
@@ -25,6 +32,15 @@ const Todos = ({ todos, setTodos, isLoading, error }: PropsTypes) => {
       <div className={styles.errorWrapper}>
         <ErrorIcon />
         <p>{error}</p>
+      </div>
+    )
+
+  if (!todos.length)
+    return (
+      <div className={styles.noData}>
+        {section === 'todo'
+          ? "You don't have any tasks in progress, click below to create one"
+          : 'You have no archived tasks'}
       </div>
     )
 
