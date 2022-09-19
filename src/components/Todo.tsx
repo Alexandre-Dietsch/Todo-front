@@ -34,6 +34,7 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
     todo.limit ? { ...todo, limit: todo.limit?.slice(0, 10) } : todo,
   )
   const [edit, setEdit] = useState(false)
+  const [removeArchivedTodo, setRemoveArchivedTodo] = useState(false)
 
   const taskToDoToday =
     moment(todo.limit).format('LL') === moment(new Date()).format('LL')
@@ -88,7 +89,12 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
             className={todo.isArchived ? styles.checked : styles.checkbox}
           />
         </div>
-        <div className={styles.todoContent}>
+        <div
+          className={styles.todoContent}
+          onClick={() =>
+            todo.isArchived && setRemoveArchivedTodo(!removeArchivedTodo)
+          }
+        >
           <div onClick={() => setTodoVisibility(!todoVisibility)}>
             <h2>{todo.title}</h2>
             <p>{todo.body}</p>
@@ -127,20 +133,25 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
             </div>
           )}
         </div>
-        <div className={styles.removeIcons}>
-          <DeleteIcon
-            className={styles.deleteIcon}
-            onClick={() => setConfirm({ visibility: true, action: 'remove' })}
-          />
-          {!todo.isArchived && (
+        {!todo.isArchived && (
+          <div className={styles.removeIcons}>
+            <DeleteIcon
+              className={styles.deleteIcon}
+              onClick={() => setConfirm({ visibility: true, action: 'remove' })}
+            />
             <ArchiveIcon
               onClick={() =>
                 setConfirm({ visibility: true, action: 'archive' })
               }
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
+      {todo.isArchived && (
+        <div className={styles.deleteArchivedTodo}>
+          <DeleteIcon className={styles.deleteIcon} />
+        </div>
+      )}
       {!todo.isArchived && (
         <Modal
           title="Todo viewer"
@@ -222,6 +233,21 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
           </Fragment>
         </Modal>
       )}
+      {
+        <Modal
+          title="Confirmation"
+          visibility={{
+            modalVisibility: removeArchivedTodo,
+            setModalVisibility: setRemoveArchivedTodo,
+          }}
+          type="confirmation"
+          confirmAction={removeTodo}
+        >
+          <h2 className={styles.confirmationTitle}>
+            Are you sure to delete this todo ?
+          </h2>
+        </Modal>
+      }
     </Fragment>
   )
 }

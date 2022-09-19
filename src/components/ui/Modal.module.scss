@@ -62,9 +62,34 @@
 
   .buttonWrapper {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
     margin: 3rem auto 0;
     max-width: 70%;
     height: 4rem;
+
+    button {
+      width: fit-content;
+      border-radius: 1rem;
+      background-color: transparent;
+      border: 1px solid $primaryGrey;
+      font-size: $regular;
+      color: $secondaryGrey;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+
+      &:first-child {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      & + .filledButton {
+        background-color: $purple;
+        color: $white;
+        border-color: transparent;
+      }
+    }
   }
 }

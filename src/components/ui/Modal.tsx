@@ -63,7 +63,9 @@ const Modal = ({
           {type === 'confirmation' && (
             <div className={styles.buttonWrapper}>
               <button onClick={() => setModalVisibility(false)}>Cancel</button>
-              <button onClick={confirmAction}>Confirm</button>
+              <button className={styles.filledButton} onClick={confirmAction}>
+                Confirm
+              </button>
             </div>
           )}
         </div>
