@@ -52,6 +52,10 @@
 
 .todosTab {
   min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .addTodoWrapper {

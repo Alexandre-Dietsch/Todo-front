@@ -1,4 +1,10 @@
-import { useState, Dispatch, SetStateAction, Fragment } from 'react'
+import {
+  useState,
+  Dispatch,
+  SetStateAction,
+  Fragment,
+  ChangeEvent,
+} from 'react'
 import moment from 'moment'
 import {
   BsCalendarWeek as DateIcon,
@@ -6,6 +12,7 @@ import {
 } from 'react-icons/bs'
 import { MdOutlineDelete as DeleteIcon } from 'react-icons/md'
 import { RiArchiveDrawerLine as ArchiveIcon } from 'react-icons/ri'
+import { AiOutlineEdit as EditIcon } from 'react-icons/ai'
 import { TodosTypes, TodoTypes } from 'types/todo.types'
 import Modal from './ui/Modal'
 import styles from './Todo.module.scss'
@@ -22,6 +29,8 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
   }>({ visibility: false, action: '' })
 
   const [todoVisibility, setTodoVisibility] = useState(false)
+  const [newTodoValue, setNewTodoValue] = useState(todo)
+  const [edit, setEdit] = useState(false)
 
   const taskToDoToday =
     moment(todo.limit).format('LL') === moment(new Date()).format('LL')
@@ -40,12 +49,12 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
     }
   }
 
-  const archiveTodo = async () => {
+  const updateTodo = async (body: unknown) => {
     try {
       const response = await fetch(`http://localhost:3001/todos/${todo._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isArchived: !todo.isArchived }),
+        body: JSON.stringify(body),
       })
       if (response.ok) {
         const todos = await response.json()
@@ -56,10 +65,22 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
     }
   }
 
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setNewTodoValue(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }))
+  }
+
   return (
     <Fragment>
       <div className={todo.isArchived ? styles.archived : styles.todo}>
-        <div className={styles.checkboxWrapper} onClick={() => archiveTodo()}>
+        <div
+          className={styles.checkboxWrapper}
+          onClick={() => updateTodo({ isArchived: !todo.isArchived })}
+        >
           <span
             className={todo.isArchived ? styles.checked : styles.checkbox}
           />
@@ -93,7 +114,9 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
               <button
                 className={styles.filledButton}
                 onClick={() =>
-                  confirm.action === 'remove' ? removeTodo() : archiveTodo()
+                  confirm.action === 'remove'
+                    ? removeTodo()
+                    : updateTodo({ isArchived: !todo.isArchived })
                 }
               >
                 Confirm
@@ -115,29 +138,74 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
           )}
         </div>
       </div>
-      <Modal
-        title="Todo viewer"
-        icon={<TodoIcon />}
-        visibility={{
-          modalVisibility: todoVisibility,
-          setModalVisibility: setTodoVisibility,
-        }}
-      >
-        <Fragment>
-          <div className={styles.inputWrapper}>
-            <input type="text" value={todo.title} disabled={false} />
-            <input type="text" value={todo.body} disabled={false} />
-          </div>
-          <div
-            className={[styles.date, taskToDoToday && styles.urgentTask].join(
-              ' ',
+      {!todo.isArchived && (
+        <Modal
+          title="Todo viewer"
+          icon={<TodoIcon />}
+          visibility={{
+            modalVisibility: todoVisibility,
+            setModalVisibility: setTodoVisibility,
+          }}
+        >
+          <Fragment>
+            <div className={styles.editWrapper}>
+              <button
+                className={styles.editButton}
+                onClick={() => setEdit(true)}
+              >
+                <EditIcon />
+                Edit the todo
+              </button>
+            </div>
+            <div
+              className={
+                edit ? styles.inputDisabledWrapper : styles.inputWrapper
+              }
+            >
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                value={newTodoValue.title}
+                onChange={event => handleChange(event)}
+                disabled={!edit}
+                autoFocus={edit}
+              />
+              <label htmlFor="body">Body</label>
+              <textarea
+                name="body"
+                id="body"
+                value={newTodoValue.body}
+                onChange={event => handleChange(event)}
+                disabled={!edit}
+              />
+            </div>
+            <div
+              className={[styles.date, taskToDoToday && styles.urgentTask].join(
+                ' ',
+              )}
+            >
+              <DateIcon />
+              {moment(todo.limit).format('LL')}
+            </div>
+            {edit && (
+              <div className={styles.confirmationButtonsWrapper}>
+                <button onClick={() => setEdit(false)}>Cancel</button>
+                <button
+                  onClick={() => {
+                    updateTodo(newTodoValue)
+                    setEdit(false)
+                  }}
+                  className={styles.filledButton}
+                >
+                  Update the todo
+                </button>
+              </div>
             )}
-          >
-            <DateIcon />
-            {moment(todo.limit).format('LL')}
-          </div>
-        </Fragment>
-      </Modal>
+          </Fragment>
+        </Modal>
+      )}
     </Fragment>
   )
 }
