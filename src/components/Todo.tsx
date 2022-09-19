@@ -5,6 +5,7 @@ import {
   Fragment,
   ChangeEvent,
 } from 'react'
+import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import {
   BsCalendarWeek as DateIcon,
@@ -24,6 +25,7 @@ type PropsTypes = {
 }
 
 const Todo = ({ todo, setTodos }: PropsTypes) => {
+  const navigate = useNavigate()
   const [confirm, setConfirm] = useState<{
     visibility: boolean
     action: 'remove' | 'archive' | ''
@@ -49,7 +51,7 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
         setTodos(todos.data)
       }
     } catch (error) {
-      console.log(error)
+      navigate('/error', { state: error })
     }
   }
 
@@ -65,7 +67,7 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
         setTodos(todos.data)
       }
     } catch (error) {
-      console.log(error)
+      navigate('/error', { state: error })
     }
   }
 

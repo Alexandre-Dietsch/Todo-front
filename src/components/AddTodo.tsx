@@ -1,4 +1,5 @@
 import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TodosTypes } from 'types/todo.types'
 import styles from './AddTodo.module.scss'
 
@@ -8,6 +9,7 @@ type PropsTypes = {
 }
 
 const AddTodo = ({ todos, setTodos }: PropsTypes) => {
+  const navigate = useNavigate()
   const [displayAddInput, setDisplayAddInput] = useState(false)
   const initialTodo = { title: '', body: '' }
   const [newTodo, setNewTodo] = useState(initialTodo)
@@ -19,12 +21,10 @@ const AddTodo = ({ todos, setTodos }: PropsTypes) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTodo),
       })
-      if (response.ok) {
-        const todos = await response.json()
-        setTodos(todos.data)
-      }
+      const todos = await response.json()
+      setTodos(todos.data)
     } catch (error) {
-      console.log(error)
+      navigate('/error', { state: error })
     }
 
     setDisplayAddInput(false)
@@ -84,7 +84,16 @@ const AddTodo = ({ todos, setTodos }: PropsTypes) => {
               >
                 Cancel
               </button>
-              <button className={styles.filledButton} onClick={() => addTask()}>
+              <button
+                className={styles.filledButton}
+                onClick={addTask}
+                disabled={
+                  !Boolean(
+                    Object.values(newTodo).filter(value => value.length > 0)
+                      .length,
+                  )
+                }
+              >
                 Add Task
               </button>
             </div>

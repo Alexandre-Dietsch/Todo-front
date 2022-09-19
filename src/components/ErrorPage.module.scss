@@ -1,0 +1,37 @@
+@import 'scss';
+
+.errorPageWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  h1 {
+    font-size: $large;
+    color: $secondaryGrey;
+  }
+
+  button {
+    width: fit-content;
+    border-radius: 1rem;
+    border: 1px solid $primaryGrey;
+    font-size: $regular;
+    background-color: $purple;
+    color: $white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}
+
+.imageWrapper {
+  width: 50vw;
+  height: auto;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

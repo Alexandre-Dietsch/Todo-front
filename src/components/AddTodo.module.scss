@@ -92,6 +92,10 @@
         background-color: $purple;
         color: $white;
         border-color: transparent;
+
+        &:disabled {
+          opacity: 0.5;
+        }
       }
     }
   }
