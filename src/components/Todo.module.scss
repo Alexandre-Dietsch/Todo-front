@@ -12,10 +12,6 @@
   cursor: pointer;
   transition: all 0.5s ease;
   position: relative;
-
-  &:hover {
-    transform: translateX(20px);
-  }
 }
 
 .archived {
@@ -120,5 +116,36 @@
       color: $white;
       border-color: transparent;
     }
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+
+  input {
+    display: flex;
+    align-items: flex-start;
+    outline: none;
+    padding: 0.5rem 1rem;
+    font-size: $regular;
+    border: none;
+    border: 1px solid $primaryGrey;
+    border-radius: 0.5rem;
+  }
+
+  input:nth-child(1) {
+    font-size: $large;
+  }
+
+  input:nth-child(2) {
+    min-height: 10vh;
+  }
+
+  input:disabled {
+    border: none;
+    background-color: transparent;
   }
 }
