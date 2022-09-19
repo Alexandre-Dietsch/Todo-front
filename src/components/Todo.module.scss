@@ -139,16 +139,11 @@
     font-size: $regular;
     border-radius: 0.5rem;
     border: 1px solid transparent;
-  }
-
-  input:nth-of-type(1) {
-    font-size: $large;
-    color: $secondaryGrey;
+    color: $primaryGrey;
   }
 
   textarea {
     width: 100%;
-    color: $primaryGrey;
     outline: none;
     resize: none;
   }
@@ -207,4 +202,8 @@
       font-size: 1.2rem;
     }
   }
+}
+
+.datePicker {
+  margin-top: 2rem;
 }

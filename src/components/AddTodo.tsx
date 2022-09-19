@@ -1,5 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react'
-import { BsCalendarWeek as DateIcon } from 'react-icons/bs'
+import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react'
 import { TodosTypes } from 'types/todo.types'
 import styles from './AddTodo.module.scss'
 
@@ -32,6 +31,12 @@ const AddTodo = ({ todos, setTodos }: PropsTypes) => {
     setNewTodo(initialTodo)
   }
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setNewTodo(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }))
+
   return (
     <div>
       <button
@@ -46,35 +51,29 @@ const AddTodo = ({ todos, setTodos }: PropsTypes) => {
           <input
             type="text"
             id="title"
+            name="title"
             placeholder="Task name here..."
             className={styles.titleInput}
             value={newTodo.title}
-            onChange={event =>
-              setNewTodo(prevState => ({
-                ...prevState,
-                title: event.target.value,
-              }))
-            }
+            onChange={handleChange}
           />
           <input
             type="text"
             id="body"
+            name="body"
             placeholder="Description"
             className={styles.bodyInput}
             value={newTodo.body}
-            onChange={event =>
-              setNewTodo(prevState => ({
-                ...prevState,
-                body: event.target.value,
-              }))
-            }
+            onChange={handleChange}
           />
           <div className={styles.buttonWrapper}>
             <div className={styles.left}>
-              <button>
-                <DateIcon />
-                Due Date
-              </button>
+              <input
+                type="date"
+                name="limit"
+                className={styles.datePicker}
+                onChange={handleChange}
+              />
             </div>
             <div className={styles.right}>
               <button

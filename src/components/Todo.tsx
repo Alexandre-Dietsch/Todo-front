@@ -16,6 +16,7 @@ import { AiOutlineEdit as EditIcon } from 'react-icons/ai'
 import { TodosTypes, TodoTypes } from 'types/todo.types'
 import Modal from './ui/Modal'
 import styles from './Todo.module.scss'
+import addTodoStyles from './AddTodo.module.scss'
 
 type PropsTypes = {
   todo: TodoTypes
@@ -29,7 +30,9 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
   }>({ visibility: false, action: '' })
 
   const [todoVisibility, setTodoVisibility] = useState(false)
-  const [newTodoValue, setNewTodoValue] = useState(todo)
+  const [newTodoValue, setNewTodoValue] = useState(
+    todo.limit ? { ...todo, limit: todo.limit?.slice(0, 10) } : todo,
+  )
   const [edit, setEdit] = useState(false)
 
   const taskToDoToday =
@@ -168,7 +171,7 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
                 name="title"
                 id="title"
                 value={newTodoValue.title}
-                onChange={event => handleChange(event)}
+                onChange={handleChange}
                 disabled={!edit}
                 autoFocus={edit}
               />
@@ -177,18 +180,31 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
                 name="body"
                 id="body"
                 value={newTodoValue.body}
-                onChange={event => handleChange(event)}
+                onChange={handleChange}
                 disabled={!edit}
               />
             </div>
-            <div
-              className={[styles.date, taskToDoToday && styles.urgentTask].join(
-                ' ',
-              )}
-            >
-              <DateIcon />
-              {moment(todo.limit).format('LL')}
-            </div>
+            {edit ? (
+              <input
+                type="date"
+                name="limit"
+                className={[addTodoStyles.datePicker, styles.datePicker].join(
+                  ' ',
+                )}
+                value={newTodoValue.limit}
+                onChange={handleChange}
+              />
+            ) : (
+              <div
+                className={[
+                  styles.date,
+                  taskToDoToday && styles.urgentTask,
+                ].join(' ')}
+              >
+                <DateIcon />
+                {moment(todo.limit).format('LL')}
+              </div>
+            )}
             {edit && (
               <div className={styles.confirmationButtonsWrapper}>
                 <button onClick={() => setEdit(false)}>Cancel</button>

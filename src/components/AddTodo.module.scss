@@ -60,6 +60,9 @@
 
     .left {
       flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .right {
@@ -92,6 +95,16 @@
       }
     }
   }
+}
+
+.datePicker {
+  border-radius: 1rem;
+  outline: none;
+  border: 1px solid $primaryGrey;
+  font-size: $regular;
+  color: $secondaryGrey;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 @keyframes pulse {
