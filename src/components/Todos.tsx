@@ -30,11 +30,14 @@ const Todos = ({ todos, setTodos, isLoading, error }: PropsTypes) => {
 
   return (
     <Fragment>
-      {todos.map(todo => (
-        <div key={todo._id} className={styles.wrapper}>
-          <Todo todo={todo} setTodos={setTodos} />
-        </div>
-      ))}
+      {todos
+        // if isArchived return 1 else return 0
+        .sort((a, b) => Number(a.isArchived) - Number(b.isArchived))
+        .map(todo => (
+          <div key={todo._id} className={styles.wrapper}>
+            <Todo todo={todo} setTodos={setTodos} />
+          </div>
+        ))}
     </Fragment>
   )
 }

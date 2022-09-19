@@ -11,14 +11,38 @@
   padding: 1rem;
   cursor: pointer;
   transition: all 0.5s ease;
+  position: relative;
 
   &:hover {
     transform: translateX(20px);
   }
 }
 
-.checkbox {
+.archived {
+  @extend .todo;
+  background-color: rgb(239, 239, 239);
+  border-radius: 1rem;
+  opacity: 0.4;
+}
+
+.checkboxWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 1;
+
+  .checkbox {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 2px solid $secondaryGrey;
+    background-color: transparent;
+  }
+
+  .checked {
+    @extend .checkbox;
+    background-color: $purple;
+  }
 }
 
 .todoContent {

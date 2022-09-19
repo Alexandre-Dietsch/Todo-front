@@ -39,7 +39,7 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
       const response = await fetch(`http://localhost:3001/todos/${todo._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isArchived: true }),
+        body: JSON.stringify({ isArchived: !todo.isArchived }),
       })
       if (response.ok) {
         const todos = await response.json()
@@ -51,9 +51,9 @@ const Todo = ({ todo, setTodos }: PropsTypes) => {
   }
 
   return (
-    <div className={styles.todo}>
-      <div className={styles.checkbox}>
-        <input type="checkbox" />
+    <div className={todo.isArchived ? styles.archived : styles.todo}>
+      <div className={styles.checkboxWrapper} onClick={() => archiveTodo()}>
+        <span className={todo.isArchived ? styles.checked : styles.checkbox} />
       </div>
       <div className={styles.todoContent}>
         <h2>{todo.title}</h2>

@@ -60,7 +60,7 @@ const TodosWrapper = () => {
       {tabs === 2 && (
         <div className={styles.todosTab}>
           <Todos
-            todos={todos.filter(todo => !todo.isArchived)}
+            todos={todos}
             setTodos={setTodos}
             isLoading={isLoading}
             error={error}
