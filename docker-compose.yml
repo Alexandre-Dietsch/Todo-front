@@ -6,6 +6,8 @@ services:
       - '3000:3000'
   api-server:
     image: todo-back
+    environment:
+      - DB_URL=mongodb://mongo:27017/todoDB
     ports:
       - '3001:3001'
     depends_on:
