@@ -9,6 +9,8 @@ Application to manage daily tasks:
 
 A task has a title, a content and a deadline
 
+https://user-images.githubusercontent.com/70936207/191201868-b5e5a0b9-2fb1-42da-bf67-64705ece4809.mp4
+
 ## Install and start the project
 
 1. Clone the projet
